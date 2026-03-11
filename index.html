@@ -9,12 +9,55 @@
 </head>
 
 <body>
+    <!-- Task 1: Navbar Implementation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://www.mysoftinn.com/images/logo/softinn-logo/softinn-logo-main-with-mascot.svg"
+                    alt="Softinn Logo" height="36">
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-5">
-        <h1 class="text-center">Welcome to the Frontend Assessment</h1>
-        <!-- TODO: Implement Task 1 here -->
-        <!-- TODO: Implement Task 2 here -->
-        <!-- TODO: Implement Task 3 here -->
+        <section class="hero">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5">
+                    <p class="display-5 fw-bold">Cloud-based Hotel Management System</p>
+                    <h1>Make It Easy<br/>for <span>Hotel</span></h1>
+                    <p class="mt-4">We create business predictability for hotel owners and enable hotel automation through our suite of products - trusted by 1,278 hotels across Southeasat Asia.</p>
+                    <button class="btn btn-primary btn-lg" type="button">Learn more</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Task 2: Card Grid Implementation -->
+        <!-- Task 3: Contact Form Implementation -->
+        <!-- Task 4: Modal Implementation -->
     </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
