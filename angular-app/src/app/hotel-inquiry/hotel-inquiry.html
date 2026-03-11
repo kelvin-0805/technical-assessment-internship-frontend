@@ -1,0 +1,127 @@
+@if (submitSuccess) {
+  <div class="success-screen">
+    <div class="success-icon">&#10003;</div>
+    <h2>Inquiry Submitted!</h2>
+    <p>Thank you. Our team will contact you within 24 hours.</p>
+    <button class="btn btn-primary" (click)="resetForm()">Submit Another</button>
+  </div>
+} @else {
+  <section class="inquiry-page">
+    <div class="page-header">
+      <h1>Hotel Booking Inquiry</h1>
+      <p class="subtitle">Fill in your details and we'll get back to you</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="inquiry-form">
+
+      <!-- Personal details -->
+      <fieldset>
+        <legend>Personal Details</legend>
+
+        <div class="form-row">
+          <div class="form-group" [class.invalid]="fieldInvalid('name')">
+            <label for="name">Full Name *</label>
+            <input id="name" type="text" formControlName="name" placeholder="e.g. Ahmad Abdullah" />
+            @if (fieldError('name', 'required')) {
+              <span class="error-msg">Name is required.</span>
+            } @else if (fieldError('name', 'minlength')) {
+              <span class="error-msg">Name must be at least 3 characters.</span>
+            }
+          </div>
+
+          <div class="form-group" [class.invalid]="fieldInvalid('email')">
+            <label for="email">Email Address *</label>
+            <input id="email" type="email" formControlName="email" placeholder="e.g. ahmad@example.com" />
+            @if (fieldError('email', 'required')) {
+              <span class="error-msg">Email is required.</span>
+            } @else if (fieldError('email', 'email')) {
+              <span class="error-msg">Enter a valid email address.</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group" [class.invalid]="fieldInvalid('phone')">
+          <label for="phone">Phone Number *</label>
+          <input id="phone" type="tel" formControlName="phone" placeholder="e.g. +60123456789" />
+          @if (fieldError('phone', 'required')) {
+            <span class="error-msg">Phone number is required.</span>
+          } @else if (fieldError('phone', 'pattern')) {
+            <span class="error-msg">Enter a valid phone number (7–15 digits).</span>
+          }
+        </div>
+      </fieldset>
+
+      <!-- Booking details -->
+      <fieldset>
+        <legend>Booking Details</legend>
+
+        <div class="form-group" [class.invalid]="fieldInvalid('roomType')">
+          <label for="roomType">Room Type *</label>
+          <select id="roomType" formControlName="roomType">
+            <option value="" disabled>Select a room type</option>
+            <option value="standard">Standard — RM 120/night</option>
+            <option value="deluxe">Deluxe — RM 200/night</option>
+            <option value="suite">Suite — RM 350/night</option>
+          </select>
+          @if (fieldError('roomType', 'required')) {
+            <span class="error-msg">Please select a room type.</span>
+          }
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" [class.invalid]="fieldInvalid('checkIn')">
+            <label for="checkIn">Check-in Date *</label>
+            <input id="checkIn" type="date" formControlName="checkIn" [min]="minDate" />
+            @if (fieldError('checkIn', 'required')) {
+              <span class="error-msg">Check-in date is required.</span>
+            } @else if (fieldError('checkIn', 'pastDate')) {
+              <span class="error-msg">Check-in date must be today or in the future.</span>
+            }
+          </div>
+
+          <div class="form-group" [class.invalid]="fieldInvalid('nights')">
+            <label for="nights">Number of Nights *</label>
+            <input id="nights" type="number" formControlName="nights" min="1" max="30" />
+            @if (fieldError('nights', 'required')) {
+              <span class="error-msg">Number of nights is required.</span>
+            } @else if (fieldError('nights', 'min') || fieldError('nights', 'max')) {
+              <span class="error-msg">Must be between 1 and 30 nights.</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="specialRequests">Special Requests</label>
+          <textarea id="specialRequests" formControlName="specialRequests" rows="3"
+                    placeholder="e.g. early check-in, extra bed, dietary requirements"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- Price summary -->
+      @if (form.value.roomType && (form.value.nights ?? 0) > 0) {
+        <div class="price-summary">
+          <div class="price-row">
+            <span>Room rate</span>
+            <span>RM {{ selectedRoomPrice }}/night</span>
+          </div>
+          <div class="price-row">
+            <span>Duration</span>
+            <span>{{ form.value.nights }} night(s)</span>
+          </div>
+          <div class="price-row total">
+            <span>Estimated Total</span>
+            <span>RM {{ estimatedTotal }}</span>
+          </div>
+        </div>
+      }
+
+      @if (submitError) {
+        <p class="submit-error">{{ submitError }}</p>
+      }
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Submitting…' : 'Submit Inquiry' }}
+      </button>
+    </form>
+  </section>
+}

@@ -1,0 +1,48 @@
+<section class="hotels-page">
+  <div class="page-header">
+    <h1>Available Hotels</h1>
+    <p class="subtitle">Browse our selection of hotels fetched from our API</p>
+  </div>
+
+  <!-- Loading state -->
+  @if (isLoading) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading hotels&hellip;</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (errorMessage) {
+    <div class="error-box">
+      <p>{{ errorMessage }}</p>
+      <button class="btn btn-outline" (click)="retry()">Retry</button>
+    </div>
+  }
+
+  <!-- Hotel grid -->
+  @if (!isLoading && !errorMessage) {
+    <div class="hotel-grid">
+      @for (hotel of hotels; track hotel.id) {
+        <div class="hotel-card">
+          <div class="card-header">
+            <span class="location">&#x1F4CD; {{ hotel.location }}</span>
+            <span class="stars">
+              @for (s of getStarArray(hotel.stars); track s) {
+                <span class="star">&#9733;</span>
+              }
+            </span>
+          </div>
+          <div class="card-body">
+            <h3>{{ hotel.name }}</h3>
+            <p class="description">{{ hotel.description }}</p>
+          </div>
+          <div class="card-footer">
+            <span class="price">RM {{ hotel.pricePerNight }}<small>/night</small></span>
+            <a routerLink="/inquiry" class="btn btn-primary">Book Now</a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>
